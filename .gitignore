@@ -1,0 +1,61 @@
+# Dependencies
+node_modules/
+.pnpm-store/
+
+# Build outputs
+dist/
+build/
+*.local
+
+# Environment files
+.env
+.env.local
+.env.*.local
+.env.production
+.env.staging
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+
+# Testing
+coverage/
+.nyc_output/
+
+# TypeScript
+*.tsbuildinfo
+
+# Supabase
+.supabase/
+temp/
+
+# Cloudflare
+.wrangler/
+
+# Backup
+*.dump
+*.dump.age
+*.sql
+
+# Keys & Secrets
+*.pem
+*.key
+*.crt
+sa*.json
+age-private-key.txt
+
+# Temporary files
+tmp/
+temp/
+*.tmp
