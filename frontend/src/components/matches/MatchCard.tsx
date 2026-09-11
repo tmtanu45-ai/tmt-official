@@ -1,18 +1,15 @@
 import { Link } from 'react-router-dom';
 import { 
-  Calendar, 
   MapPin, 
   Users, 
   Clock, 
-  Gamepad2,
-  CheckCircle,
   AlertCircle,
   Key,
+  Gamepad2,
 } from 'lucide-react';
-import { format, formatDistanceToNow } from 'date-fns';
+import { format } from 'date-fns';
 import { Card } from '../../components/ui/Card';
 import { Badge } from '../../components/ui/Badge';
-import { Button } from '../../components/ui/Button';
 
 interface MatchCardProps {
   match: {
@@ -54,7 +51,6 @@ export function MatchCard({ match }: MatchCardProps) {
   const timeUntil = scheduledAt.getTime() - now.getTime();
   const isSoon = timeUntil > 0 && timeUntil < 24 * 60 * 60 * 1000;
   const isLive = match.status === 'LIVE';
-  const isPast = scheduledAt < now && match.status !== 'LIVE';
 
   const statusInfo = statusConfig[match.status] || { label: match.status, variant: 'neutral' };
   const capacityText = match.max_players 

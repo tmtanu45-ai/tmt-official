@@ -1,6 +1,6 @@
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { api } from '../services/api';
-import type { User, Profile } from '../types';
+import type { User, Profile } from '../types/index';
 
 interface AuthContextType {
   user: User | null;
@@ -23,33 +23,7 @@ interface RegisterData {
   date_of_birth: string;
 }
 
-interface User {
-  id: string;
-  email: string;
-  role: string;
-}
 
-interface Profile {
-  id: string;
-  user_id: string;
-  username: string | null;
-  display_name: string | null;
-  ff_uid: string | null;
-  in_game_name: string | null;
-  avatar_url: string | null;
-  bio: string | null;
-  account_status: 'ACTIVE' | 'SUSPENDED' | 'BANNED' | 'DELETED';
-  profile_completion_pct: number;
-  stats?: {
-    matches_played: number;
-    wins: number;
-    kills: number;
-    deaths: number;
-    kd_ratio: number;
-    avg_placement: number;
-    win_rate: number;
-  };
-}
 
 const AuthContext = createContext<AuthContextType | null>(null);
 
@@ -81,7 +55,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }
 
   async function register(data: RegisterData) {
-    const { data: response } = await api.post('/auth/register', data);
+    await api.post('/auth/register', data);
     // Registration requires email verification
     // User will be redirected to login after verification
   }

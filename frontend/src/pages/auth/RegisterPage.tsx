@@ -8,13 +8,7 @@ import { Button } from '../../components/ui/Button';
 import { Input } from '../../components/ui/Input';
 import { Card } from '../../components/ui/Card';
 import { 
-  Mail, 
-  Lock, 
-  User, 
-  Gamepad2,
   AlertCircle,
-  Eye, 
-  EyeOff,
   Trophy,
 } from 'lucide-react';
 
@@ -40,15 +34,12 @@ type RegisterForm = z.infer<typeof registerSchema>;
 
 export function RegisterPage() {
   const navigate = useNavigate();
-  const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
-  const { register, handleSubmit, watch, formState: { errors } } = useForm<RegisterForm>({
+  const { register, handleSubmit, formState: { errors } } = useForm<RegisterForm>({
     resolver: zodResolver(registerSchema),
   });
-
-  const password = watch('password');
 
   const onSubmit = async (data: RegisterForm) => {
     setError(null);
@@ -121,7 +112,7 @@ export function RegisterPage() {
 
           <Input
             label="Password"
-            type={showPassword ? 'text' : 'password'}
+            type="password"
             {...register('password')}
             placeholder="••••••••"
             error={errors.password?.message}
@@ -131,7 +122,7 @@ export function RegisterPage() {
 
           <Input
             label="Confirm Password"
-            type={showPassword ? 'text' : 'password'}
+            type="password"
             {...register('confirmPassword')}
             placeholder="••••••••"
             error={errors.confirmPassword?.message}

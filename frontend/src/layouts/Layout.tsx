@@ -1,5 +1,5 @@
-import { Outlet, NavLink, useNavigate } from 'react-router-dom';
-import { useAuth } from '../../context/AuthContext';
+import { Link, Outlet, NavLink, useNavigate } from 'react-router-dom';
+import { useAuth } from '@/context/AuthContext';
 import { 
   LayoutDashboard, 
   Calendar, 
@@ -8,9 +8,7 @@ import {
   LogOut,
   Menu,
   X,
-  ChevronDown,
   Trophy,
-  Shield,
 } from 'lucide-react';
 import { useState } from 'react';
 
@@ -187,5 +185,3 @@ export function Layout() {
   );
 }
 
-// Simple Link component for internal use
-import Link from 'react-router-dom';

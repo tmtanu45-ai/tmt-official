@@ -5,14 +5,14 @@ import {
   CheckSquare, 
   Key, 
   Trophy, 
-  Clock, 
-  AlertCircle,
+  
+  
   ChevronRight,
 } from 'lucide-react';
-import { format, formatDistanceToNow } from 'date-fns';
+import { format } from 'date-fns';
 import { Card } from '../../components/ui/Card';
-import { Badge } from '../../components/ui/Badge';
-import { Button } from '../../components/ui/Button';
+
+
 import { Link } from 'react-router-dom';
 
 interface Match {
@@ -72,8 +72,6 @@ export function DashboardPage() {
       return data.stats as Stats;
     },
   });
-
-  const now = new Date();
 
   return (
     <div className="space-y-6 animate-in">
@@ -223,7 +221,7 @@ function StatCard({ title, value, icon: Icon, color }: {
           <p className="font-display text-3xl font-bold gradient-text">{value}</p>
         </div>
         <div className={`w-12 h-12 rounded-lg bg-${color}/20 flex items-center justify-center`}>
-          <Icon className="w-6 h-6" style={{ color: `var(--color-${color})` }} />
+          <Icon className="w-6 h-6 [color:var(--color-${color})]" />
         </div>
       </div>
     </Card>
@@ -269,7 +267,7 @@ function MatchCard({ match }: { match: Match }) {
 }
 
 function RegistrationCard({ registration }: { registration: Registration }) {
-  const { matches, status, checkins } = registration;
+  const { matches, checkins } = registration;
   const scheduledAt = new Date(matches.scheduled_at);
   const checkinStatus = checkins?.status || 'NOT_OPEN';
 
@@ -321,7 +319,7 @@ function ActionCard({ title, description, icon: Icon, href, color }: {
   return (
     <Link to={href} className="card-glass gradient-border hover:border-neon-cyan/50 transition-all duration-300 group">
       <div className={`w-12 h-12 rounded-lg bg-${color}/20 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform`}>
-        <Icon className="w-6 h-6" style={{ color: `var(--color-${color})` }} />
+        <Icon className="w-6 h-6 [color:var(--color-${color})]" />
       </div>
       <h3 className="font-display text-lg font-bold mb-1">{title}</h3>
       <p className="text-sm text-ghost-gray">{description}</p>

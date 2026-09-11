@@ -2,18 +2,10 @@ import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { api } from '../../services/api';
 import { 
-  Calendar, 
-  Filter, 
   X, 
-  ChevronRight,
 } from 'lucide-react';
-import { useQuery } from '@tanstack/react-query';
-import { api } from '../../services/api';
 import { Card } from '../../components/ui/Card';
-import { Badge } from '../../components/ui/Badge';
 import { Button } from '../../components/ui/Button';
-import { Link } from 'react-router-dom';
-import { MatchCard } from '../../components/matches';
 import { MatchCard } from '../../components/matches';
 
 interface Match {
@@ -48,17 +40,6 @@ interface MatchesResponse {
     has_prev: boolean;
   };
 }
-
-const statusColors: Record<string, string> = {
-  DRAFT: 'neutral',
-  OPEN: 'success',
-  FULL: 'warning',
-  CLOSED: 'info',
-  LIVE: 'danger',
-  COMPLETED: 'neutral',
-  CANCELLED: 'danger',
-  EXPIRED: 'neutral',
-};
 
 export function MatchesPage() {
   const [page, setPage] = useState(1);
@@ -95,7 +76,9 @@ export function MatchesPage() {
     return (
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {[...Array(6)].map((_, i) => (
-          <Card key={i} className="animate-pulse h-64" />
+          <Card key={i} className="animate-pulse h-64">
+            <div className="h-full" />
+          </Card>
         ))}
       </div>
     );

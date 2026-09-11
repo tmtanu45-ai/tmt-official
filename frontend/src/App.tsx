@@ -1,7 +1,5 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
-import { Layout } from './layouts/Layout';
-import { AdminLayout } from './layouts/AdminLayout';
 import { LoginPage } from './pages/auth/LoginPage';
 import { RegisterPage } from './pages/auth/RegisterPage';
 import { ForgotPasswordPage } from './pages/auth/ForgotPasswordPage';
@@ -34,7 +32,7 @@ function App() {
         <Route path="/reset-password" element={<ResetPasswordPage />} />
 
         {/* Player Protected Routes */}
-        <Route element={<ProtectedRoute><Layout /></ProtectedRoute>}>
+        <Route element={<ProtectedRoute />}>
           <Route path="/" element={<Navigate to="/dashboard" replace />} />
           <Route path="/dashboard" element={<DashboardPage />} />
           <Route path="/matches" element={<MatchesPage />} />
@@ -45,7 +43,7 @@ function App() {
         </Route>
 
         {/* Admin Protected Routes */}
-        <Route element={<AdminRoute><AdminLayout /></AdminRoute>}>
+        <Route element={<AdminRoute />}>
           <Route path="/admin" element={<Navigate to="/admin/dashboard" replace />} />
           <Route path="/admin/dashboard" element={<AdminDashboardPage />} />
           <Route path="/admin/matches" element={<AdminMatchesPage />} />

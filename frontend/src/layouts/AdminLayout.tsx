@@ -1,5 +1,5 @@
-import { Outlet, NavLink, useNavigate } from 'react-router-dom';
-import { useAuth } from '../../context/AuthContext';
+import { Link, Outlet, NavLink, useNavigate } from 'react-router-dom';
+import { useAuth } from '@/context/AuthContext';
 import { 
   LayoutDashboard, 
   Calendar, 
@@ -194,4 +194,3 @@ export function AdminLayout() {
   );
 }
 
-import Link from 'react-router-dom';
