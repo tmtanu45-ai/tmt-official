@@ -108,35 +108,3 @@ AGE_PUBLIC_KEY = "${{AGE_PUBLIC_KEY}}"
 # ============================================
 LOG_LEVEL = "info"
 LOG_FILE_PATH = "/tmp/logs"
-
-# ============================================
-# RATE LIMITING (Upstash Redis)
-# ============================================
-UPSTASH_REDIS_REST_URL = "${{UPSTASH_REDIS_REST_URL}}"
-UPSTASH_REDIS_REST_TOKEN = "${{UPSTASH_REDIS_REST_TOKEN}}"
-
-# ============================================
-# EMAIL (Cloudflare Worker)
-# ============================================
-EMAIL_WORKER_URL = "${{EMAIL_WORKER_URL}}"
-EMAIL_API_TOKEN = "${{EMAIL_API_TOKEN}}"
-
-# ============================================
-# CRON & ADMIN SECURITY
-# ============================================
-CRON_SECRET = "${{CRON_SECRET}}"
-ADMIN_API_SECRET = "${{ADMIN_API_SECRET}}"
-
-# ============================================
-# GOOGLE DRIVE BACKUP
-# ============================================
-GDRIVE_SA1_KEY_FILE = "/tmp/sa1.json"
-GDRIVE_SA2_KEY_FILE = "/tmp/sa2.json"
-GDRIVE_SA3_KEY_FILE = "/tmp/sa3.json"
-AGE_PUBLIC_KEY = "${{AGE_PUBLIC_KEY}}"
-
-# ============================================
-# LOGGING
-# ============================================
-LOG_LEVEL = "info"
-LOG_FILE_PATH = "/tmp/logs"
