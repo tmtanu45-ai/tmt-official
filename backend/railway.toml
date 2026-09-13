@@ -1,9 +1,8 @@
 # Railway configuration for TMT eSports Backend
 # Deploy to Railway with 5 Supabase accounts
-
 [build]
-builder = "docker"
-dockerfilePath = "./Dockerfile"
+builder = "DOCKERFILE"
+dockerfilePath = "Dockerfile"
 
 [deploy]
 healthcheckPath = "/api/v1/health"
