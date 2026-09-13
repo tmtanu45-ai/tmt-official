@@ -1,4 +1,4 @@
-// Database types for DB-CRED project (High Security)
+// Cred Database Types
 export interface Database {
   public: {
     Tables: {
@@ -6,8 +6,8 @@ export interface Database {
         Row: {
           id: string;
           match_id: string;
-          room_id_encrypted: string; // JSON string of EncryptedData
-          password_encrypted: string; // JSON string of EncryptedData
+          room_id_encrypted: string;
+          password_encrypted: string;
           encryption_version: number;
           status: 'LOCKED' | 'AVAILABLE' | 'EXPIRED';
           released_at: string | null;
@@ -78,7 +78,9 @@ export interface Database {
         };
       };
     };
-    Views: { [_ in never]: never };
+    Views: {
+      [_ in never]: never;
+    };
     Functions: {
       release_credentials: {
         Args: { p_match_id: string };
@@ -100,7 +102,11 @@ export interface Database {
         Returns: boolean;
       };
     };
-    Enums: { [_ in never]: never };
-    CompositeTypes: { [_ in never]: never };
+    Enums: {
+      [_ in never]: never;
+    };
+    CompositeTypes: {
+      [_ in never]: never;
+    };
   };
 }

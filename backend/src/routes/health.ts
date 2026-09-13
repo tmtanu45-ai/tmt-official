@@ -1,7 +1,7 @@
 import { Router, Request, Response } from 'express';
 import { getSupabaseClients } from '../config/supabase.js';
 
-export const healthRoutes = Router();
+export const healthRoutes = Router() as Router;
 
 healthRoutes.get('/health', async (req: Request, res: Response) => {
   const supabase = getSupabaseClients();

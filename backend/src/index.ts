@@ -1,5 +1,5 @@
 import 'dotenv/config';
-import express from 'express';
+import express, { Router, type Express } from 'express';
 import helmet from 'helmet';
 import cors from 'cors';
 import { json, urlencoded } from 'express';
@@ -21,6 +21,12 @@ import { adminRoutes } from './routes/admin.js';
 import { cronRoutes } from './routes/cron.js';
 import { webhookRoutes } from './routes/webhooks.js';
 import { logger } from './utils/logger.js';
+
+interface TypedRouter extends Router {
+  public?: Router;
+  protected?: Router;
+  room?: Router;
+}
 
 async function bootstrap() {
   const app = express();

@@ -30,7 +30,7 @@ const resetPasswordSchema = z.object({
   password: z.string().min(12).max(128),
 });
 
-export const authRoutes = Router();
+export const authRoutes = Router() as Router & { protected: Router };
 
 // Public routes
 authRoutes.post('/register', async (req: Request, res: Response) => {

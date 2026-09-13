@@ -1,4 +1,4 @@
-// Database types for DB-MATCH project
+// Match Database Types
 export interface Database {
   public: {
     Tables: {
@@ -17,8 +17,8 @@ export interface Database {
           registration_closes_at: string;
           checkin_opens_at: string | null;
           checkin_closes_at: string | null;
-          credential_release_at: string;
-          credential_expires_at: string;
+          credential_release_at: string | null;
+          credential_expires_at: string | null;
           status: 'DRAFT' | 'OPEN' | 'FULL' | 'CLOSED' | 'LIVE' | 'COMPLETED' | 'CANCELLED' | 'EXPIRED';
           created_by: string;
           created_at: string;
@@ -38,8 +38,8 @@ export interface Database {
           registration_closes_at: string;
           checkin_opens_at?: string | null;
           checkin_closes_at?: string | null;
-          credential_release_at: string;
-          credential_expires_at: string;
+          credential_release_at: string | null;
+          credential_expires_at: string | null;
           status?: 'DRAFT' | 'OPEN' | 'FULL' | 'CLOSED' | 'LIVE' | 'COMPLETED' | 'CANCELLED' | 'EXPIRED';
           created_by: string;
           created_at?: string;
@@ -59,8 +59,8 @@ export interface Database {
           registration_closes_at?: string;
           checkin_opens_at?: string | null;
           checkin_closes_at?: string | null;
-          credential_release_at?: string;
-          credential_expires_at?: string;
+          credential_release_at?: string | null;
+          credential_expires_at?: string | null;
           status?: 'DRAFT' | 'OPEN' | 'FULL' | 'CLOSED' | 'LIVE' | 'COMPLETED' | 'CANCELLED' | 'EXPIRED';
           updated_at?: string;
         };
@@ -161,7 +161,9 @@ export interface Database {
         };
       };
     };
-    Views: { [_ in never]: never };
+    Views: {
+      [_ in never]: never;
+    };
     Functions: {
       get_player_stats: {
         Args: { p_user_id: string };
@@ -176,7 +178,11 @@ export interface Database {
         };
       };
     };
-    Enums: { [_ in never]: never };
-    CompositeTypes: { [_ in never]: never };
+    Enums: {
+      [_ in never]: never;
+    };
+    CompositeTypes: {
+      [_ in never]: never;
+    };
   };
 }

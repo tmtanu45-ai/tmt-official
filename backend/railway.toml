@@ -1,0 +1,142 @@
+# Railway configuration for TMT eSports Backend
+# Deploy to Railway with 5 Supabase accounts
+
+[build]
+builder = "docker"
+dockerfilePath = "Dockerfile"
+
+[deploy]
+healthcheckPath = "/api/v1/health"
+healthcheckTimeout = 300
+restartPolicyType = "on_failure"
+restartPolicyMaxRetries = 10
+
+[deploy.preDeploy]
+# Run migrations before deployment
+command = "npm run db:migrate"
+
+[deploy.postDeploy]
+# Optional: Run seed or verification after deploy
+# command = "npm run db:seed"
+
+[services.web]
+name = "tmt-esports-api"
+startCommand = "node dist/index.js"
+healthcheckPath = "/api/v1/health"
+healthcheckTimeout = 30
+restartPolicyType = "on_failure"
+restartPolicyMaxRetries = 5
+
+# Resource limits for Railway free tier
+[services.web.resources]
+memory = 512  # MB - Railway free tier limit
+cpu = 0.5     # CPU cores - Railway free tier limit
+
+# Environment variables that will be injected at runtime
+# These must be set in Railway dashboard (Settings > Variables)
+[variables]
+# Server Configuration
+NODE_ENV = "production"
+PORT = "3000"
+API_URL = "https://${{RAILWAY_STATIC_URL}}"
+FRONTEND_URL = "https://app.tmtofficial.esports"
+
+# ============================================
+# SUPABASE - 5 Different Accounts/Orgs
+# ============================================
+
+# Org 1 - Auth & Match
+SUPABASE_AUTH_URL = "${{SUPABASE_AUTH_URL}}"
+SUPABASE_AUTH_ANON_KEY = "${{SUPABASE_AUTH_ANON_KEY}}"
+SUPABASE_AUTH_SERVICE_KEY = "${{SUPABASE_AUTH_SERVICE_KEY}}"
+
+SUPABASE_MATCH_URL = "${{SUPABASE_MATCH_URL}}"
+SUPABASE_MATCH_ANON_KEY = "${{SUPABASE_MATCH_ANON_KEY}}"
+SUPABASE_MATCH_SERVICE_KEY = "${{SUPABASE_MATCH_SERVICE_KEY}}"
+
+# ============================================
+# Org 2 - Credentials & Audit
+# ============================================
+SUPABASE_CRED_URL = "${{SUPABASE_CRED_URL}}"
+SUPABASE_CRED_ANON_KEY = "${{SUPABASE_CRED_ANON_KEY}}"
+SUPABASE_CRED_SERVICE_KEY = "${{SUPABASE_CRED_SERVICE_KEY}}"
+
+SUPABASE_AUDIT_URL = "${{SUPABASE_AUDIT_URL}}"
+SUPABASE_AUDIT_ANON_KEY = "${{SUPABASE_AUDIT_ANON_KEY}}"
+SUPABASE_AUDIT_SERVICE_KEY = "${{SUPABASE_AUDIT_SERVICE_KEY}}"
+
+# ============================================
+# Org 3 - Notifications
+# ============================================
+SUPABASE_NOTIF_URL = "${{SUPABASE_NOTIF_URL}}"
+SUPABASE_NOTIF_ANON_KEY = "${{SUPABASE_NOTIF_ANON_KEY}}"
+SUPABASE_NOTIF_SERVICE_KEY = "${{SUPABASE_NOTIF_SERVICE_KEY}}"
+
+# ============================================
+# ENCRYPTION (CRITICAL - GENERATE ONCE)
+# ============================================
+CREDENTIAL_ENCRYPTION_KEY = "${{CREDENTIAL_ENCRYPTION_KEY}}"
+
+# ============================================
+# EMAIL (Cloudflare Worker)
+# ============================================
+EMAIL_WORKER_URL = "${{EMAIL_WORKER_URL}}"
+EMAIL_API_TOKEN = "${{EMAIL_API_TOKEN}}"
+
+# ============================================
+# RATE LIMITING (Upstash Redis)
+# ============================================
+UPSTASH_REDIS_REST_URL = "${{UPSTASH_REDIS_REST_URL}}"
+UPSTASH_REDIS_REST_TOKEN = "${{UPSTASH_REDIS_REST_TOKEN}}"
+
+# ============================================
+# CRON & ADMIN SECURITY
+# ============================================
+CRON_SECRET = "${{CRON_SECRET}}"
+ADMIN_API_SECRET = "${{ADMIN_API_SECRET}}"
+
+# ============================================
+# GOOGLE DRIVE BACKUP (Heavy files storage)
+# ============================================
+GDRIVE_SA1_KEY_FILE = "${{GDRIVE_SA1_KEY_FILE}}"
+GDRIVE_SA2_KEY_FILE = "${{GDRIVE_SA2_KEY_FILE}}"
+GDRIVE_SA3_KEY_FILE = "${{GDRIVE_SA3_KEY_FILE}}"
+AGE_PUBLIC_KEY = "${{AGE_PUBLIC_KEY}}"
+
+# ============================================
+# LOGGING
+# ============================================
+LOG_LEVEL = "info"
+LOG_FILE_PATH = "/tmp/logs"
+
+# ============================================
+# RATE LIMITING (Upstash Redis)
+# ============================================
+UPSTASH_REDIS_REST_URL = "${{UPSTASH_REDIS_REST_URL}}"
+UPSTASH_REDIS_REST_TOKEN = "${{UPSTASH_REDIS_REST_TOKEN}}"
+
+# ============================================
+# EMAIL (Cloudflare Worker)
+# ============================================
+EMAIL_WORKER_URL = "${{EMAIL_WORKER_URL}}"
+EMAIL_API_TOKEN = "${{EMAIL_API_TOKEN}}"
+
+# ============================================
+# CRON & ADMIN SECURITY
+# ============================================
+CRON_SECRET = "${{CRON_SECRET}}"
+ADMIN_API_SECRET = "${{ADMIN_API_SECRET}}"
+
+# ============================================
+# GOOGLE DRIVE BACKUP
+# ============================================
+GDRIVE_SA1_KEY_FILE = "/tmp/sa1.json"
+GDRIVE_SA2_KEY_FILE = "/tmp/sa2.json"
+GDRIVE_SA3_KEY_FILE = "/tmp/sa3.json"
+AGE_PUBLIC_KEY = "${{AGE_PUBLIC_KEY}}"
+
+# ============================================
+# LOGGING
+# ============================================
+LOG_LEVEL = "info"
+LOG_FILE_PATH = "/tmp/logs"

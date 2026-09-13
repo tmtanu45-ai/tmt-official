@@ -1,4 +1,4 @@
-// Database types for DB-AUDIT project
+// Audit Database Types
 export interface Database {
   public: {
     Tables: {
@@ -104,9 +104,37 @@ export interface Database {
         };
       };
     };
-    Views: { [_ in never]: never };
-    Functions: { [_ in never]: never };
-    Enums: { [_ in never]: never };
-    CompositeTypes: { [_ in never]: never };
+    Views: {
+      [_ in never]: never;
+    };
+    Functions: {
+      log_audit: {
+        Args: {
+          p_admin_id: string | null;
+          p_action: string;
+          p_entity_type: string;
+          p_entity_id: string | null;
+          p_metadata: Record<string, unknown> | null;
+        };
+        Returns: void;
+      };
+      log_security_event: {
+        Args: {
+          p_event_type: string;
+          p_user_id: string | null;
+          p_ip: string | null;
+          p_user_agent: string | null;
+          p_metadata: Record<string, unknown> | null;
+          p_severity: 'LOW' | 'MEDIUM' | 'HIGH' | 'CRITICAL';
+        };
+        Returns: void;
+      };
+    };
+    Enums: {
+      [_ in never]: never;
+    };
+    CompositeTypes: {
+      [_ in never]: never;
+    };
   };
 }

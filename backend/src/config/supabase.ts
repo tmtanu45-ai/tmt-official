@@ -1,9 +1,9 @@
 import { createClient, SupabaseClient } from '@supabase/supabase-js';
-import { Database as AuthDatabase } from '../types/auth.js';
-import { Database as MatchDatabase } from '../types/match.js';
-import { Database as CredDatabase } from '../types/cred.js';
-import { Database as AuditDatabase } from '../types/audit.js';
-import { Database as NotifDatabase } from '../types/notif.js';
+import type { Database as AuthDatabase } from '../types/auth.js';
+import type { Database as MatchDatabase } from '../types/match.js';
+import type { Database as CredDatabase } from '../types/cred.js';
+import type { Database as AuditDatabase } from '../types/audit.js';
+import type { Database as NotifDatabase } from '../types/notif.js';
 
 export interface SupabaseClients {
   auth: SupabaseClient<AuthDatabase>;

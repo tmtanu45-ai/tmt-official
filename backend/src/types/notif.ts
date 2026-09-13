@@ -1,4 +1,4 @@
-// Database types for DB-NOTIF project
+// Notif Database Types
 export interface Database {
   public: {
     Tables: {
@@ -141,9 +141,17 @@ export interface Database {
         };
       };
     };
-    Views: { [_ in never]: never };
-    Functions: { [_ in never]: never };
-    Enums: { [_ in never]: never };
-    CompositeTypes: { [_ in never]: never };
+    Views: {
+      [_ in never]: never;
+    };
+    Functions: {
+      [_ in never]: never;
+    };
+    Enums: {
+      [_ in never]: never;
+    };
+    CompositeTypes: {
+      [_ in never]: never;
+    };
   };
 }
