@@ -5,7 +5,12 @@ import { logger } from '../utils/logger.js';
 import { decryptRoomCredentials } from '../encryption/credentials.js';
 import { sendEmail } from '../services/email.js';
 
-export const credentialRoutes = Router();
+// Extend Router type to include custom properties
+interface ExtendedRouter extends Router {
+  room: Router;
+}
+
+export const credentialRoutes = Router() as Router & { room: Router };
 
 // Get credential status (no decryption)
 credentialRoutes.get('/:matchId/status', async (req: Request, res: Response) => {
@@ -332,8 +337,8 @@ credentialRoutes.room.get('/:matchId', async (req: Request, res: Response) => {
       const expiresAt = cred?.expires_at ? new Date(cred.expires_at) : null;
 
       let effectiveStatus = cred?.status || 'LOCKED';
-      if (releasedAt && now >= releasedAt && cred.status === 'LOCKED') effectiveStatus = 'AVAILABLE';
-      if (expiresAt && now >= expiresAt && cred.status === 'AVAILABLE') effectiveStatus = 'EXPIRED';
+      if (releasedAt && now >= releasedAt && cred?.status === 'LOCKED') effectiveStatus = 'AVAILABLE';
+      if (expiresAt && now >= expiresAt && cred?.status === 'AVAILABLE') effectiveStatus = 'EXPIRED';
 
       if (checkin?.status !== 'CHECKED_IN') {
         roomState = 'WAITING_FOR_CHECKIN';
@@ -344,8 +349,8 @@ credentialRoutes.room.get('/:matchId', async (req: Request, res: Response) => {
         // Decrypt for display
         try {
           const decrypted = decryptRoomCredentials(
-            cred.room_id_encrypted as any,
-            cred.password_encrypted as any
+            cred!.room_id_encrypted as any,
+            cred!.password_encrypted as any
           );
           credential = {
             room_id: decrypted.roomId,
@@ -387,8 +392,14 @@ async function logCredentialAccess(
   req: Request
 ) {
   try {
+    const { data: cred } = await supabase.cred
+      .from('credentials')
+      .select('id')
+      .eq('match_id', matchId)
+      .single();
+
     await supabase.cred.from('credential_access_logs').insert({
-      credential_id: (await supabase.cred.from('credentials').select('id').eq('match_id', matchId).single()).data?.id,
+      credential_id: cred?.id,
       user_id: userId,
       match_id: matchId,
       action,

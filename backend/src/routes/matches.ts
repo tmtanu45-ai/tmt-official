@@ -4,6 +4,12 @@ import { getSupabaseClients } from '../config/supabase.js';
 import { AppError } from '../middleware/errorHandler.js';
 import { logger } from '../utils/logger.js';
 
+// Extend Router type to include custom properties
+interface ExtendedRouter extends Router {
+  public: Router;
+  protected: Router;
+}
+
 const matchListQuerySchema = z.object({
   status: z.enum(['DRAFT', 'OPEN', 'FULL', 'CLOSED', 'LIVE', 'COMPLETED', 'CANCELLED', 'EXPIRED']).optional(),
   game_mode: z.enum(['CLASSIC', 'RANKED', 'CUSTOM']).optional(),
@@ -31,7 +37,7 @@ const matchCreateSchema = z.object({
 
 const matchUpdateSchema = matchCreateSchema.partial();
 
-export const matchRoutes = Router();
+const matchRoutes = Router() as Router & { public: Router; protected: Router };
 
 // Public routes
 matchRoutes.public = Router();

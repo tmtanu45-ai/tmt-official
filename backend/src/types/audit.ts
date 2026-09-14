@@ -36,6 +36,22 @@ export interface Database {
           entity_id?: string | null;
           metadata?: Record<string, unknown> | null;
         };
+        Relationships: [
+          {
+            foreignKeyName: 'audit_logs_admin_id_fkey',
+            columns: ['admin_id'],
+            isOneToOne: false,
+            referencedRelation: 'admin_users',
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'audit_logs_user_id_fkey',
+            columns: ['user_id'],
+            isOneToOne: false,
+            referencedRelation: 'profiles',
+            referencedColumns: ['id']
+          }
+        ];
       };
       security_events: {
         Row: {
@@ -77,6 +93,15 @@ export interface Database {
           resolved_by?: string | null;
           resolved_at?: string | null;
         };
+        Relationships: [
+          {
+            foreignKeyName: 'security_events_user_id_fkey',
+            columns: ['user_id'],
+            isOneToOne: false,
+            referencedRelation: 'profiles',
+            referencedColumns: ['id']
+          }
+        ];
       };
       analytics_events: {
         Row: {
@@ -102,6 +127,7 @@ export interface Database {
           page?: string | null;
           metadata?: Record<string, unknown> | null;
         };
+        Relationships: [];
       };
     };
     Views: {

@@ -38,6 +38,15 @@ export interface Database {
           expires_at?: string;
           updated_at?: string;
         };
+        Relationships: [
+          {
+            foreignKeyName: 'credentials_match_id_fkey',
+            columns: ['match_id'],
+            isOneToOne: true,
+            referencedRelation: 'matches',
+            referencedColumns: ['id']
+          }
+        ];
       };
       credential_access_logs: {
         Row: {
@@ -76,6 +85,29 @@ export interface Database {
           failure_reason?: string | null;
           granted_at?: string | null;
         };
+        Relationships: [
+          {
+            foreignKeyName: 'credential_access_logs_credential_id_fkey',
+            columns: ['credential_id'],
+            isOneToOne: false,
+            referencedRelation: 'credentials',
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'credential_access_logs_user_id_fkey',
+            columns: ['user_id'],
+            isOneToOne: false,
+            referencedRelation: 'profiles',
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'credential_access_logs_match_id_fkey',
+            columns: ['match_id'],
+            isOneToOne: false,
+            referencedRelation: 'matches',
+            referencedColumns: ['id']
+          }
+        ];
       };
     };
     Views: {

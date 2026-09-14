@@ -22,10 +22,19 @@ import { cronRoutes } from './routes/cron.js';
 import { webhookRoutes } from './routes/webhooks.js';
 import { logger } from './utils/logger.js';
 
-interface TypedRouter extends Router {
+// Extend Express Router with custom properties
+interface ExtendedRouter extends Router {
   public?: Router;
   protected?: Router;
   room?: Router;
+}
+
+declare module 'express' {
+  interface Router {
+    public?: Router;
+    protected?: Router;
+    room?: Router;
+  }
 }
 
 async function bootstrap() {

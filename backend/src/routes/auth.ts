@@ -44,7 +44,7 @@ authRoutes.post('/register', async (req: Request, res: Response) => {
     throw new AppError('AGE_RESTRICTED', 'You must be at least 13 years old', 400);
   }
 
-  const { data: authData, error: authError } = await supabase.auth.auth.admin.createUser({
+  const { data: authData, error: authError } = await supabase.auth.admin.createUser({
     email: data.email,
     password: data.password,
     email_confirm: true,
@@ -77,7 +77,7 @@ authRoutes.post('/register', async (req: Request, res: Response) => {
     });
 
   if (profileError) {
-    await supabase.auth.auth.admin.deleteUser(user.id);
+    await supabase.auth.admin.deleteUser(user.id);
     throw new AppError('PROFILE_CREATION_FAILED', profileError.message, 500);
   }
 

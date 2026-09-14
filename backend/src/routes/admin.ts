@@ -639,8 +639,18 @@ adminRoutes.post('/users/invite', async (req: Request, res: Response) => {
     throw new AppError('INVALID_ROLE', 'Invalid role', 400);
   }
 
-  // Check if user exists
-  const { data: user } = await supabase.auth.auth.admin.getUserByEmail(email);
+  // Check if user exists by email using listUsers
+  const { data: { users }, error: listError } = await supabase.auth.admin.listUsers({
+    page: 1,
+    perPage: 1000
+  });
+  
+  if (listError) {
+    throw new AppError('USER_LOOKUP_FAILED', listError.message, 500);
+  }
+
+  const user = users.find(u => u.email === email);
+  
   if (!user) {
     throw new AppError('USER_NOT_FOUND', 'User not found', 404);
   }

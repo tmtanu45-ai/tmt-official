@@ -44,6 +44,22 @@ export interface Database {
           profile_completion_pct?: number;
           updated_at?: string;
         };
+        Relationships: [
+          {
+            foreignKeyName: 'profiles_user_id_fkey',
+            columns: ['user_id'],
+            isOneToOne: true,
+            referencedRelation: 'users',
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'profiles_user_id_fkey',
+            columns: ['user_id'],
+            isOneToOne: false,
+            referencedRelation: 'admin_users',
+            referencedColumns: ['user_id']
+          }
+        ];
       };
       admin_users: {
         Row: {
@@ -72,6 +88,15 @@ export interface Database {
           last_login?: string | null;
           updated_at?: string;
         };
+        Relationships: [
+          {
+            foreignKeyName: 'admin_users_user_id_fkey',
+            columns: ['user_id'],
+            isOneToOne: true,
+            referencedRelation: 'profiles',
+            referencedColumns: ['user_id']
+          }
+        ];
       };
       user_sessions: {
         Row: {
@@ -99,6 +124,15 @@ export interface Database {
           user_id?: string;
           revoked_at?: string | null;
         };
+        Relationships: [
+          {
+            foreignKeyName: 'user_sessions_user_id_fkey',
+            columns: ['user_id'],
+            isOneToOne: false,
+            referencedRelation: 'profiles',
+            referencedColumns: ['id']
+          }
+        ];
       };
     };
     Views: {

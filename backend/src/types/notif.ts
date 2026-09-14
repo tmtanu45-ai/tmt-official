@@ -47,6 +47,22 @@ export interface Database {
           read?: boolean;
           read_at?: string | null;
         };
+        Relationships: [
+          {
+            foreignKeyName: 'notifications_user_id_fkey',
+            columns: ['user_id'],
+            isOneToOne: false,
+            referencedRelation: 'profiles',
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'notifications_match_id_fkey',
+            columns: ['match_id'],
+            isOneToOne: false,
+            referencedRelation: 'matches',
+            referencedColumns: ['id']
+          }
+        ];
       };
       notification_preferences: {
         Row: {
@@ -90,6 +106,15 @@ export interface Database {
           security_alerts?: boolean;
           updated_at?: string;
         };
+        Relationships: [
+          {
+            foreignKeyName: 'notification_preferences_user_id_fkey',
+            columns: ['user_id'],
+            isOneToOne: true,
+            referencedRelation: 'profiles',
+            referencedColumns: ['id']
+          }
+        ];
       };
       email_queue: {
         Row: {
@@ -139,6 +164,15 @@ export interface Database {
           failed_at?: string | null;
           error_message?: string | null;
         };
+        Relationships: [
+          {
+            foreignKeyName: 'email_queue_notification_id_fkey',
+            columns: ['notification_id'],
+            isOneToOne: false,
+            referencedRelation: 'notifications',
+            referencedColumns: ['id']
+          }
+        ];
       };
     };
     Views: {

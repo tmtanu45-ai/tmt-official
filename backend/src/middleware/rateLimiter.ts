@@ -79,7 +79,7 @@ async function checkRateLimit(key: string, config: RateLimitConfig): Promise<{
 }
 
 export function createRateLimiter(config: Partial<RateLimitConfig> = {}) {
-  const mergedConfig = { ...defaultConfig, ...config };
+  const mergedConfig: RateLimitConfig = { ...defaultConfig, ...config };
   
   return async (req: Request, res: Response, next: NextFunction) => {
     try {
@@ -91,13 +91,13 @@ export function createRateLimiter(config: Partial<RateLimitConfig> = {}) {
       res.setHeader('X-RateLimit-Reset', Math.ceil(result.resetTime / 1000));
       
       if (!result.allowed) {
-        res.setHeader('Retry-After', Math.ceil(config.windowMs / 1000));
+        res.setHeader('Retry-After', Math.ceil(mergedConfig.windowMs / 1000));
         return res.status(429).json({
           error: {
             code: 'RATE_LIMITED',
             message: 'Too many requests. Please try again later.',
             request_id: req.id,
-            retry_after: Math.ceil(config.windowMs / 1000),
+            retry_after: Math.ceil(mergedConfig.windowMs / 1000),
           },
         });
       }
