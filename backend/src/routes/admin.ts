@@ -6,6 +6,54 @@ import { logger } from '../utils/logger.js';
 import { encryptRoomCredentials } from '../encryption/credentials.js';
 import { sendEmail } from '../services/email.js';
 
+const matchStatusConfig = {
+  DRAFT: { label: 'Draft', variant: 'neutral' as const },
+  OPEN: { label: 'Open', variant: 'success' as const },
+  FULL: { label: 'Full', variant: 'warning' as const },
+  CLOSED: { label: 'Closed', variant: 'info' as const },
+  LIVE: { label: 'Live', variant: 'danger' as const },
+  COMPLETED: { label: 'Completed', variant: 'neutral' as const },
+  CANCELLED: { label: 'Cancelled', variant: 'danger' as const },
+  EXPIRED: { label: 'Expired', variant: 'neutral' as const },
+} as const;
+
+const matchStatusValues = ['DRAFT', 'OPEN', 'FULL', 'CLOSED', 'LIVE', 'COMPLETED', 'CANCELLED', 'EXPIRED'] as const;
+type MatchStatus = typeof matchStatusValues[number];
+
+const registrationStatusConfig = {
+  CONFIRMED: { label: 'Confirmed', variant: 'success' as const },
+  CANCELLED: { label: 'Cancelled', variant: 'danger' as const },
+  WAITLISTED: { label: 'Waitlisted', variant: 'warning' as const },
+} as const;
+
+const checkinStatusConfig = {
+  NOT_OPEN: { label: 'Not Open', variant: 'neutral' as const },
+  OPEN: { label: 'Open', variant: 'warning' as const },
+  CHECKED_IN: { label: 'Checked In', variant: 'success' as const },
+  MISSED: { label: 'Missed', variant: 'danger' as const },
+  CANCELLED: { label: 'Cancelled', variant: 'neutral' as const },
+} as const;
+
+const playerStatusConfig = {
+  ACTIVE: { label: 'Active', variant: 'success' as const },
+  SUSPENDED: { label: 'Suspended', variant: 'warning' as const },
+  BANNED: { label: 'Banned', variant: 'danger' as const },
+  DELETED: { label: 'Deleted', variant: 'neutral' as const },
+} as const;
+
+const credentialStatusConfig = {
+  LOCKED: { label: 'Locked', variant: 'neutral' as const },
+  AVAILABLE: { label: 'Available', variant: 'success' as const },
+  EXPIRED: { label: 'Expired', variant: 'danger' as const },
+} as const;
+
+const securitySeverityConfig = {
+  LOW: { label: 'Low', variant: 'info' as const },
+  MEDIUM: { label: 'Medium', variant: 'warning' as const },
+  HIGH: { label: 'High', variant: 'danger' as const },
+  CRITICAL: { label: 'Critical', variant: 'danger' as const },
+} as const;
+
 const matchCreateSchema = z.object({
   title: z.string().min(5).max(100),
   description: z.string().max(2000).optional(),
@@ -88,9 +136,9 @@ adminRoutes.get('/dashboard/metrics', async (req: Request, res: Response) => {
 // Match management
 adminRoutes.get('/matches', async (req: Request, res: Response) => {
   const supabase = getSupabaseClients();
-  const page = parseInt(req.query.page as string) || 1;
+const page = parseInt(req.query.page as string) || 1;
   const limit = Math.min(parseInt(req.query.limit as string) || 50, 100);
-  const status = req.query.status as string;
+  const status = req.query.status as MatchStatus | undefined;
   const offset = (page - 1) * limit;
 
   let qb = supabase.match
@@ -255,7 +303,7 @@ adminRoutes.get('/matches/:matchId/registrations', async (req: Request, res: Res
   const { matchId } = req.params;
   const page = parseInt(req.query.page as string) || 1;
   const limit = Math.min(parseInt(req.query.limit as string) || 50, 100);
-  const status = req.query.status as string;
+  const status = req.query.status as 'CONFIRMED' | 'CANCELLED' | 'WAITLISTED' | undefined;
   const offset = (page - 1) * limit;
 
   let qb = supabase.match
@@ -341,7 +389,7 @@ adminRoutes.get('/players', async (req: Request, res: Response) => {
   const page = parseInt(req.query.page as string) || 1;
   const limit = Math.min(parseInt(req.query.limit as string) || 50, 100);
   const search = req.query.search as string;
-  const status = req.query.status as string;
+  const status = req.query.status as 'ACTIVE' | 'SUSPENDED' | 'BANNED' | 'DELETED' | undefined;
   const offset = (page - 1) * limit;
 
   let qb = supabase.auth
@@ -420,7 +468,7 @@ adminRoutes.get('/credentials', async (req: Request, res: Response) => {
   const supabase = getSupabaseClients();
   const page = parseInt(req.query.page as string) || 1;
   const limit = Math.min(parseInt(req.query.limit as string) || 50, 100);
-  const status = req.query.status as string;
+  const status = req.query.status as 'LOCKED' | 'AVAILABLE' | 'EXPIRED' | undefined;
   const offset = (page - 1) * limit;
 
   let qb = supabase.cred
